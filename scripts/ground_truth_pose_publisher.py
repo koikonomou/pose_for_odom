@@ -8,13 +8,13 @@ def callback(newPose):
     global publisher, tfListener
 
     try:
-        (trans, rot) = tfListener.lookupTransform('optitrak', 'total_station', rospy.Time(0))
+        (trans, rot) = tfListener.lookupTransform('/odom', '/base_link', rospy.Time(0))
     except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
         return
 
     pose = geometry_msgs.msg.PoseWithCovarianceStamped()
     pose.header.stamp = rospy.Time(0)
-    pose.header.frame_id = 'optitrak'
+    pose.header.frame_id = '/odom'
     pose.pose.pose.position.x = trans[0]
     pose.pose.pose.position.y = trans[1]
     pose.pose.pose.position.z = trans[2]
